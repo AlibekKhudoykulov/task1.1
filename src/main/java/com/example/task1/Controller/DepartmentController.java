@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/department")
 public class DepartmentController {
@@ -34,12 +36,12 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> add(@RequestBody DepartmentDto departmentDto) {
+    public ResponseEntity<ApiResponse> add(@Valid @RequestBody DepartmentDto departmentDto) {
         ApiResponse add = departmentService.add(departmentDto);
         return ResponseEntity.status(add.isSuccess() ? HttpStatus.OK : HttpStatus.ALREADY_REPORTED).body(add);
     }
     @PutMapping("/{id}")
-    public  ResponseEntity<ApiResponse> edit(@PathVariable Integer id,@RequestBody DepartmentDto departmentDto){
+    public  ResponseEntity<ApiResponse> edit(@Valid @PathVariable Integer id,@RequestBody DepartmentDto departmentDto){
         ApiResponse edit = departmentService.edit(id, departmentDto);
         return ResponseEntity.status(edit.isSuccess()?201:209).body(edit);
     }
